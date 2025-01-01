@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Girl</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('https://as2.ftcdn.net/v2/jpg/02/47/41/87/1000_F_247418732_ojiVihUx6q8Piq6yxcqYNqG86Ph6R4j5.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: left center;
+            color: white;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            width: 100%;
+            background-color: rgb(255, 0, 174);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        #header h1 {
+            color: purple;
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        #message-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            z-index: 5;
+            overflow-y: auto;
+        }
+
+        #message-container p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 80%;
+        }
+
+        #start-chat-button {
+            background-color: purple;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 30px;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        #start-chat-button:hover {
+            background-color: #9b4d98;
+        }
+
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 380px;
+            height: 60%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            width: fit-content;
+            padding: 8px 15px;
+            border-radius: 15px;
+            color: white;
+            opacity: 0;
+            animation: typingAnimation 1.5s forwards;
+            max-width: 75%;
+        }
+
+        .chat-message.my-message {
+            background-color: #3498db;
+            margin-right: auto;
+        }
+
+        .chat-message.liza-message {
+            background-color: #8e44ad;
+            margin-left: auto;
+        }
+
+        #reply-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .reply-button {
+            background-color: purple;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .reply-button:hover {
+            background-color: #9b4d98;
+        }
+
+        @keyframes typingAnimation {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        #fireworks {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        #new-year {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 2em;
+            color: white;
+            z-index: 101;
+        }
+
+        #new-year h1 {
+            font-size: 4em;
+            color: gold;
+        }
+
+        #slogan {
+            font-size: 1.5em;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .year-transition {
+            display: inline-block;
+            position: relative;
+        }
+
+        .year-transition span {
+            display: inline-block;
+            transition: all 1s ease;
+        }
+
+        .year-transition span.year-change {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        #memory-boxes {
+            display: none;
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 1.2em;
+            color: white;
+            z-index: 102;
+        }
+
+        .memory-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            width: 250px;
+            display: inline-block;
+        }
+
+        .memory-box h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="https://github.com/sharkcores/lizasbday/raw/main/song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>        
+
+    <div id="header">
+        <h1>!!!!HAPPY BIRTHDAY LIZA!!!!</h1>
+    </div>
+
+    <div id="message-container">
+        <p>Hey Liza! It's your birthday today! I hope you're having an amazing day!</p>
+        <p>Let's celebrate together and make this day unforgettable. 💕</p>
+        <p>I can't wait to chat with you and make this birthday even more special!</p>
+        <p>Scroll down to start the conversation with me. 🎉</p>
+        <button id="start-chat-button">Start Chat</button>
+    </div>
+
+    <div id="chat-box"></div>
+    <div id="fireworks"></div>
+
+    <div id="new-year">
+        <h1 id="year" class="year-transition">
+            <span id="year-4">2024</span>
+            <span id="year-5" class="year-change">2025</span>
+        </h1>
+        <div id="slogan">A new year, a new opportunity for us!</div>
+    </div>
+
+    <div id="memory-boxes">
+        <h1>A FEW MEMORIES!</h1>
+        <div class="memory-box">
+            <h3>How we met</h3>
+            <p>Kinda funny, thorugh tiktok comments 😂 but i never regret it baby.
+                im so glad we met. You made me so happy.
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>JULY</h3>
+            <p>Our best month: JULY! Gosh i loved it so much! Calling everyday with your sweet voice
+                I LOVED IT SO MUCH, can we have this again?
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>Driving to Greece and back </h3>
+            <p>Gosh it was the worst. Just stuck in a car. I mean, I loved it we texted the whole time
+                and when you were gone i imagined us while looking out the window.  But driving through serbia
+                was the worst remember? 🕒</p>
+        </div>
+        <div class="memory-box">
+            <h3>Among us gameplay </h3>
+            <p>IT WAS SO FUNNYYY how you used to be the imposter, and i had no idea like you lied SO GOOOD
+                gosh baby youre the best among us player in the world
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>Your mouth sounds</h3>
+            <p>remember how you made mouth sounds and ou pretended that you didnt know where it comes from
+                and i LITERALLY thought i was going crazy LOL 🤣 it was so so funny when you told me
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>Minecraft</h3>
+            <p> DO YOU REMEMBER how we built our city? and the store? the piene speks? and our little house
+                with the panda and our own bed! I loved it so much how you always wanted to play with me
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>Our movie nights</h3>
+            <p>Gosh i felt like a married couple with you. despite the distance i felt so close to you, us watching
+                movies together was the best thing ever. Im still waiting to watch squid game with you :)
+            </p>
+        </div>
+        <div class="memory-box">
+            <h3>Our facetimes</h3>
+            <p>I remember how shy you were. we both were. your beautiful eyes trying to look at me without getting so red,
+                and when you flexed your huge muscles it was so wonderful. I loved everything with you!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const startChatButton = document.getElementById('start-chat-button');
+        const chatBox = document.getElementById('chat-box');
+        const messageContainer = document.getElementById('message-container');
+        const header = document.getElementById('header');
+        const fireworks = document.getElementById('fireworks');
+        const newYear = document.getElementById('new-year');
+        const year4 = document.getElementById('year-4');
+        const year5 = document.getElementById('year-5');
+        const slogan = document.getElementById('slogan');
+        const memoryBoxes = document.getElementById('memory-boxes');
+        const replyButtonsContainer = document.createElement('div');
+        replyButtonsContainer.id = 'reply-buttons';
+        document.body.appendChild(replyButtonsContainer);
+    
+        let isChatStarted = false;
+        let currentStep = 0;
+    
+        startChatButton.addEventListener('click', function () {
+            header.style.display = 'none';
+            messageContainer.style.display = 'none';
+            chatBox.style.display = 'flex';
+            isChatStarted = true;
+    
+            addMessage("How are you doing?", 'my-message');
+            addReplyButton("I'm doing great! But we still have some issues...");
+        });
+    
+        function addMessage(content, sender) {
+            const message = document.createElement('div');
+            message.classList.add('chat-message');
+            message.classList.add(sender);
+            message.textContent = content;
+            chatBox.appendChild(message);
+    
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    
+        function addReplyButton(replyContent) {
+            const replyButton = document.createElement('button');
+            replyButton.classList.add('reply-button');
+            replyButton.textContent = replyContent;
+    
+            replyButton.addEventListener('click', function () {
+                handleReply(replyContent);
+            });
+    
+            replyButtonsContainer.appendChild(replyButton);
+        }
+    
+        function handleReply(replyContent) {
+            replyButtonsContainer.innerHTML = '';
+    
+            if (currentStep === 0) {
+                addMessage("I'm doing great! But we still have some issues...", 'liza-message');
+                setTimeout(() => {
+                    addMessage("I know.. and I'm sorry.", 'my-message');
+                    addReplyButton("Do you think maybe we can take things slowly?");
+                }, 1000);
+            } else if (currentStep === 1) {
+                addMessage("Do you think maybe we can take things slowly?", 'liza-message');
+                setTimeout(() => {
+                    addMessage("Yes, that's fine with me, Liza!", 'my-message');
+                    addReplyButton("I love you alexey, Start the new year together?");
+                }, 1000);
+            } else if (currentStep === 2) {
+                addMessage("I love you alexey, Start the new year together?", 'liza-message');
+                setTimeout(() => {
+                    addMessage("YES BABY, START THE NEW YEAR TOGETHER! I LOVE YOU TOO LIZA! HAPPY BIRTHDAY!", 'my-message');
+    
+                    setTimeout(() => {
+                        chatBox.style.display = 'none';
+                        showFireworksAndYearTransition();
+                    }, 1000);
+                }, 1000);
+            }
+            currentStep++;
+        }
+    
+        function showFireworksAndYearTransition() {
+            fireworks.style.display = 'block';
+            newYear.style.display = 'block';
+            setTimeout(() => {
+                year4.classList.add('year-change');
+                setTimeout(() => {
+                    year5.classList.remove('year-change');
+                    slogan.style.display = 'block';
+                }, 1000);
+            }, 1000);
+    
+            setTimeout(() => {
+                fireworks.style.display = 'none';
+                newYear.style.display = 'none';
+                showMemoryBoxes();
+            }, 5000);
+        }
+
+        function showMemoryBoxes() {
+            memoryBoxes.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
