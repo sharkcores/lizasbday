@@ -111,12 +111,12 @@
         }
 
         .chat-message.my-message {
-            background-color: #3498db;
+            background-color: #3498db; /* Blue for your messages (now on the left) */
             margin-right: auto;
         }
 
         .chat-message.liza-message {
-            background-color: #8e44ad;
+            background-color: #8e44ad; /* Purple for her messages (now on the right) */
             margin-left: auto;
         }
 
@@ -146,7 +146,7 @@
         }
 
         #fireworks {
-            display: none;
+            display: none; /* Initially hidden */
             position: absolute;
             top: 0;
             left: 0;
@@ -157,7 +157,7 @@
         }
 
         #new-year {
-            display: none;
+            display: none; /* Initially hidden */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -177,7 +177,7 @@
             font-size: 1.5em;
             color: white;
             margin-top: 20px;
-            display: none;
+            display: none; /* Initially hidden */
         }
 
         .year-transition {
@@ -195,8 +195,9 @@
             opacity: 0;
         }
 
+        /* Memory Boxes */
         #memory-boxes {
-            display: none;
+            display: none; /* Initially hidden */
             position: absolute;
             top: 70%;
             left: 50%;
@@ -223,19 +224,20 @@
 </head>
 <body>
     <audio autoplay loop>
-        <source src="https://github.com/sharkcores/lizasbday/raw/main/song.mp3" type="audio/mp3">
+        <source src="https://drive.google.com/uc?export=download&id=1WatUFVgXxuYN7G8MYiD_7s4ogINdyPNx" type="audio/mp3">
         Your browser does not support the audio element.
-    </audio>        
-
+        
+    </audio>
+    
     <div id="header">
         <h1>!!!!HAPPY BIRTHDAY LIZA!!!!</h1>
     </div>
 
     <div id="message-container">
         <p>Hey Liza! It's your birthday today! I hope you're having an amazing day!</p>
-        <p>Let's celebrate together and make this day unforgettable</p>
-        <p>I can't wait to chat with you and make this birthday even better</p>
-        <p>Im sure you'll love it!!!!! HAPPY BIRTHDAYYYY</p>
+        <p>Let's celebrate together and make this day unforgettable. 💕</p>
+        <p>I can't wait to chat with you and make this birthday even more special!</p>
+        <p>Scroll down to start the conversation with me. 🎉</p>
         <button id="start-chat-button">Start Chat</button>
     </div>
 
@@ -249,6 +251,8 @@
         </h1>
         <div id="slogan">A new year, a new opportunity for us!</div>
     </div>
+
+    <!-- Memory Boxes Section -->
 
     <div id="memory-boxes">
         <h1>A FEW MEMORIES!</h1>
@@ -372,8 +376,12 @@
                 setTimeout(() => {
                     addMessage("YES BABY, START THE NEW YEAR TOGETHER! I LOVE YOU TOO LIZA! HAPPY BIRTHDAY!", 'my-message');
     
+                    // Chat ends
                     setTimeout(() => {
+                        // Hide chatbox
                         chatBox.style.display = 'none';
+    
+                        // Fireworks and New Year transition
                         showFireworksAndYearTransition();
                     }, 1000);
                 }, 1000);
@@ -383,24 +391,26 @@
     
         function showFireworksAndYearTransition() {
             fireworks.style.display = 'block';
-            newYear.style.display = 'block';
+            newYear.style.display = 'block'; // Make New Year visible
             setTimeout(() => {
-                year4.classList.add('year-change');
+                // Animate year transition
+                year4.classList.add('year-change'); // Make '2024' change
                 setTimeout(() => {
-                    year5.classList.remove('year-change');
-                    slogan.style.display = 'block';
+                    year5.classList.remove('year-change'); // Reveal '2025'
+                    slogan.style.display = 'block'; // Show the slogan
                 }, 1000);
             }, 1000);
     
+            // Add 2 seconds delay before hiding fireworks and year
             setTimeout(() => {
-                fireworks.style.display = 'none';
-                newYear.style.display = 'none';
-                showMemoryBoxes();
-            }, 5000);
+                fireworks.style.display = 'none'; // Hide fireworks
+                newYear.style.display = 'none';  // Hide new year date
+                showMemoryBoxes(); // Show memory boxes after transition
+            }, 5000); // 2 seconds after the year transition
         }
 
         function showMemoryBoxes() {
-            memoryBoxes.style.display = 'block';
+            memoryBoxes.style.display = 'block'; // Show memory boxes
         }
     </script>
 </body>
